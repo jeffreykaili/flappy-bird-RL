@@ -61,6 +61,7 @@ class Tube:
 			return True
 
 def game():
+	os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d"%(0,0)
 	pygame.init()
 	screen = pygame.display.set_mode((1600, 900))
 	FPS = 60
