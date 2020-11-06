@@ -32,7 +32,7 @@ class Bird:
 		elif(selfRect.x > pillarRect.x+280 and (self.scoreInc == False)):
 			self.score += 1
 			self.scoreInc = True
-			return 1
+			return 1 
 
 class Tube:
 	def __init__(self, top, dist=0, startingx=1000):
@@ -138,13 +138,13 @@ def game(network, config):
 			for bird in birdList:
 				first=bird.collide(bird.rect(), pipe[0].rect())
 				second=bird.collide(bird.rect(), pipe[1].rect())
-				if(bird.alive == False): 
+				if(bird.alive == 0): 
 					genetic[index].fitness -= 3
 					del birdList[index]
 					del genetic[index]
 					del networks[index]
 					del birdTrueIndex[index]
-				elif(first == 1 or second == 1): 
+				elif (first == 1 or second == 1): 
 					genetic[index].fitness += 5
 				else:
 					genetic[index].fitness += 0.05
@@ -164,8 +164,8 @@ def game(network, config):
 		screen.blit(birdList[currentBird].image, (birdList[currentBird].x, birdList[currentBird].y)) 
 		screen.blit(font.render(str(birdList[currentBird].score), False, (255,255,255)), (740, 100))
 		screen.blit(genFont.render("GENERATION: "+str(generation), False, (255,255,255)), (20, 10))
-		screen.blit(genFont.render("WATCHING BIRD: "+str(birdTrueIndex[currentBird]), False, (255,255,255)), (1060, 10))
-		print(birdList[currentBird].collide(bird.rect(), pipe[1].rect()), birdList[currentBird].collide(bird.rect(), pipe[0].rect()))
+		screen.blit(genFont.render("WATCHING BIRD: "+str(birdTrueIndex[currentBird]), False, (255,255,255)), (1070, 10))
+		screen.blit(genFont.render("BIRDS ALIVE: "+str(len(birdList)), False, (255,255,255)), (550, 820))
 		pygame.display.update()
 
 
