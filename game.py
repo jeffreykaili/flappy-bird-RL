@@ -47,13 +47,15 @@ class Tube:
 			self.image = pygame.image.load(os.path.join("upipe.png")).convert_alpha()
 			self.x = startingx
 			self.y = dist + self.gap 
-	def randY(self):
+	def randY(self, previous=0):
 		self.y = randint(-600, -170) 
+		while(abs(self.y)-abs(previous) > 380):
+			self.y = randint(-600, -170)
 	def rect(self):
 		pipeRect = self.image.get_rect()
 		pipeRect.topleft = (self.x, self.y)
 		return pipeRect
-	def move(self, dist=0):
+	def move(self, dist=0, previous=0):
 		if(self.x > -282-100):
 			self.x -= 18 
 		else:
@@ -61,7 +63,7 @@ class Tube:
 			if(dist):
 				self.y = dist + self.gap 
 			else:
-				self.randY() 
+				self.randY(previous) 
 			return True
 global generation 
 generation = 1
@@ -118,9 +120,9 @@ def game(network, config):
 
 		for bird in birdList:
 			bird.y += bird.grav
-		for pipe in pipes: 
-			reset=pipe[0].move() 
-			pipe[1].move(pipe[0].y) 
+		for ind, pipe in enumerate(pipes): 
+			reset=pipe[0].move(0, (ind+4)%3) 
+			pipe[1].move(pipe[0].y, (ind+4)%3) 
 			if(reset == True):
 				for bird in birdList:
 					bird.scoreInc = 0 
